@@ -12,3 +12,6 @@ CREATE INDEX idx_booking_status ON Booking(status);
 CREATE INDEX idx_property_location ON Property(location);
 CREATE INDEX idx_property_price ON Property(pricepernight);
 CREATE INDEX idx_property_host_status ON Property(host_id, price_per_night);
+
+-- Payment Table Indexes
+CREATE INDEX idx_payment_booking_id ON Payment(booking_id);
