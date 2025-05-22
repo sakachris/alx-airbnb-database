@@ -50,3 +50,40 @@ JOIN User u ON b.user_id = u.user_id
 JOIN Property p ON b.property_id = p.property_id
 LEFT JOIN Payment pay ON pay.booking_id = b.booking_id;
 
+
+-- EXPLAIN ANALYZE to assess performance
+-- EXPLAIN is used to analyze the query's execution plan.
+-- It helps determine if indexes are used effectively and pinpoints slow operations.
+EXPLAIN ANALYZE
+SELECT 
+    b.booking_id,
+    b.start_date,
+    b.end_date,
+    b.status,
+
+    u.first_name || ' ' || u.last_name AS customer_name,
+    p.name AS property_name,
+    pay.amount
+
+FROM Booking b
+JOIN User u ON b.user_id = u.user_id
+JOIN Property p ON b.property_id = p.property_id
+LEFT JOIN Payment pay ON pay.booking_id = b.booking_id;
+
+-- Example with WHERE and AND to filter and test index usage
+EXPLAIN ANALYZE
+SELECT 
+    b.booking_id,
+    b.start_date,
+    b.end_date,
+    b.status,
+
+    u.first_name || ' ' || u.last_name AS customer_name,
+    p.name AS property_name,
+    pay.amount
+
+FROM Booking b
+JOIN User u ON b.user_id = u.user_id
+JOIN Property p ON b.property_id = p.property_id
+LEFT JOIN Payment pay ON pay.booking_id = b.booking_id
+WHERE b.status = 'confirmed' AND p.location = 'Nairobi';
